@@ -24,6 +24,6 @@ export default class Edge {
    * @returns {null} si le noeud ne fait pas partie de l'arrête
    */
   getOtherNode(node) {
-    return from === node ? to : to === node ? from : null;
+    return this.from === node ? this.to : this.to === node ? this.from : null;
   }
 }

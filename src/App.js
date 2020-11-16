@@ -1,4 +1,4 @@
-import Main from "./app/screens/main";
+import Main from "./app/screens/Main";
 
 function App() {
   return <Main />;

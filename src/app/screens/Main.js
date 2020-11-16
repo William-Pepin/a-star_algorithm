@@ -1,6 +1,6 @@
 import React from "react";
 import Labyrinth from "../components/Labyrinth";
-import appGraph from "../class/graph";
+import appGraph from "../class/Graph";
 
 const graph = new appGraph();
 
