@@ -1,5 +1,5 @@
 import React from "react";
-import Labyrinth from "../components/Labyrinth";
+import Maze from "../components/Maze";
 import appGraph from "../class/Graph";
 
 const graph = new appGraph();
@@ -9,7 +9,7 @@ export default function main() {
     <div>
       <h1>A* Algorithm</h1>
       <button>Start</button>
-      <Labyrinth />
+      <Maze x={50} y={50} />
     </div>
   );
 }

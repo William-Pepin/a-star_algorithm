@@ -6,12 +6,12 @@ export default class Edge {
   /**
    * @Author William Pépin
    * @Desc Constructeur permettant d'instancier les deux variables de l'arrête (edge)
-   * @param {Node}from Noeud de départ
-   * @param {Node}to Noeud de destination
+   * @param {Int}from Noeud de départ
+   * @param {Int}to Noeud de destination
    * @param {Int}weight Poid de l'arrête, 1 par défaut
    * @returns null
    */
-  constructor(from, to, weight = 1) {
+  constructor(from, to, weight = 100) {
     this.from = from;
     this.to = to;
     this.weight = weight;
@@ -24,6 +24,6 @@ export default class Edge {
    * @returns {null} si le noeud ne fait pas partie de l'arrête
    */
   getOtherNode(node) {
-    return this.from === node ? this.to : this.to === node ? this.from : null;
+    return;
   }
 }

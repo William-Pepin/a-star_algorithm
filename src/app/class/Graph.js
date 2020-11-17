@@ -13,5 +13,42 @@ export default class Graph {
   constructor(nodes, edges) {
     this.nodes = nodes;
     this.edges = edges;
+    this.visited = {};
+  }
+
+  hasUnvisitedNeighbors(node) {
+    let neighbors = this.findNeighbors(node);
+    for (let index = 0; index < neighbors.length; index++) {
+      const neighbor = neighbors[index];
+      if (this.visited[neighbor.id] !== true) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  findEdges(node) {
+    return this.edges.filter(
+      (edge) => edge.from === node.id || edge.to === node.id
+    );
+  }
+
+  findNeighbors(node) {
+    let neighbors = [];
+    this.findEdges(node).forEach((edge) => {
+      let to = edge.from === node.id ? edge.to : edge.from;
+      neighbors.push(this.nodes[to]);
+    });
+    return neighbors;
+  }
+
+  findUnvisitedNeighbors(node) {
+    return this.findNeighbors(node).filter(
+      (neighbor) => this.visited[neighbor.id] !== true
+    );
+  }
+
+  resetVisited() {
+    this.visited = {};
   }
 }
