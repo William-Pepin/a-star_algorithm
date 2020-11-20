@@ -14,7 +14,7 @@ export default class Node {
    * @param {*} data données du noeud
    * @param {String} color couleur du noeud, par défaut la couleur primaire des configurations
    */
-  constructor(id, x, y, data, color = colors.primary) {
+  constructor(id, x, y, data, color = "#FFF") {
     this.x = x;
     this.y = y;
     this.id = id;

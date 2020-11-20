@@ -19,7 +19,7 @@ export default {
   },
   edges: {
     width: 40,
-    color: "#9fd3c7",
+    color: "#FFF",
     arrows: {
       to: false,
     },

@@ -1,63 +1,43 @@
 import PriorityQueue from "priorityqueuejs";
 
-export default function A_Star(graph, from, to) {
-  let previousNodes = {};
+export default function A_Star(graph, from, end) {
+  let openList = new PriorityQueue((a, b) => b.fScore - a.fScore);
+  let finishedList = [];
 
   graph.nodes.forEach((node) => {
     node.gScore = Number.MAX_VALUE; // Valeur maximale des distances
-    node.fScore = Number.MAX_VALUE;
+    node.fScore = heuristic(node, end);
   });
-
   from.gScore = 0; // Valeur 0 pour la première distance
-  from.fScore = from.gScore + heuristic(from, to);
+  from.fScore = from.gScore + heuristic(from, end);
+  openList.enq(from);
 
-  let queue = new PriorityQueue((a, b) => {
-    if (a.fScore > b.fScore) {
-      return -1;
-    }
-    if (a.fScore < b.fScore) {
-      return 1;
-    }
-    if (a.gScore > b.gScore) {
-      return 1;
-    }
-    if (a.gScore < b.gScore) {
-      return -1;
-    }
-    return 0;
-  });
-
-  queue.enq(from);
-
-  // Pendant que la liste n'est pas vide
-  while (!queue.isEmpty()) {
-    let current = queue.deq(); // Sort l'élément prioritaire
-
-    current.visited = true; // Visite l'élément
+  while (!openList.isEmpty()) {
+    let current = openList.deq();
+    current.visited = true;
 
     let currentEdges = graph.findEdges(current);
-
+    console.log(currentEdges);
     currentEdges.forEach((edge) => {
       let to = edge.from === current.id ? edge.to : edge.from;
-      var newDistance = current.distance + edge.weight; // Nouvelle distance
+      console.log(to);
 
-      if (newDistance < graph.nodes[to].distance) {
-        graph.nodes[to].distance = newDistance; // Si plus petit
-        previousNodes[to] = current;
-        queue.enq(graph.nodes[to]);
+      if (to === end.id) {
+        return finishedList;
       }
+      if (graph.nodes[to].visited != true) {
+        graph.nodes[to].gScore = current.gScore + edge.weight;
+        graph.nodes[to].fScore = current.fScore + current.gScore;
+        openList.enq(graph.node[to]);
+      }
+      finishedList.push(current);
     });
   }
-
-  return buildStack(graph, previousNodes, to);
 }
-
-function buildStack(graph, previousNodes, to) {
-  let toNode = graph.nodes[to]; // Noeud de fin
+function buildStack(previousNodes, to) {
   let stack = [];
 
-  stack.push(toNode);
-  let previousNode = previousNodes[to];
+  let previousNode = to;
   while (previousNode != null) {
     stack.push(previousNode);
     previousNode = previousNodes[previousNode.id];
