@@ -1,3 +1,7 @@
+/**
+ * @Author William Pépin
+ * @Desc Constante définissant les couleurs de l'application
+ */
 export default {
   primary: "#9fd3c7",
   secondary: "#142d4c",

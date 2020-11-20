@@ -1,4 +1,8 @@
 import colors from "./colors";
+/**
+ * @Author William Pépin
+ * @Desc Constante définissant les différentes couleurs des noeuds dans le labyrinthe
+ */
 export default {
   default: {
     background: colors.tile,
