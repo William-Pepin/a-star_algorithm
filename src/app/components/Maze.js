@@ -10,7 +10,6 @@ export default class Maze extends Component {
     this.state = {
       maze: generateMaze(props.x, props.y),
     };
-    console.log(this.state.maze);
   }
 
   render() {

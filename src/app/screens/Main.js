@@ -1,9 +1,6 @@
 import React from "react";
 import Maze from "../components/Maze";
-import appGraph from "../class/Graph";
 import colors from "../config/colors";
-
-const graph = new appGraph();
 
 export default function main() {
   return (

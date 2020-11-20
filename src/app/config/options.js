@@ -12,14 +12,14 @@ export default {
     size: 40,
   },
   interaction: {
-    dragNodes: false,
+    //dragNodes: false,
     zoomView: false,
   },
   physics: {
     enabled: false,
   },
   edges: {
-    width: 81.5,
+    width: 81,
     color: {
       background: "#fff",
       border: "#fff",

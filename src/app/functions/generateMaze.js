@@ -1,11 +1,7 @@
-import Graph from "../class/Graph2";
-import colors from "../config/colors";
+import Graph from "../class/Graph";
 import { getRandomInteger } from "./functions";
 
-const defaultColor = {
-  background: colors.tile,
-  border: colors.tile,
-};
+import nodeColors from "../config/nodeColors";
 
 export default function generateMaze(sizeX, sizeY) {
   let properties = {
@@ -15,14 +11,14 @@ export default function generateMaze(sizeX, sizeY) {
   let blankMaze = new Graph();
   blankMaze = generateNodes(blankMaze, properties);
   blankMaze = generateEdges(blankMaze, properties);
-  let maze = generateWalls(blankMaze);
+  let maze = generateWalls(blankMaze, properties);
   return maze;
 }
 
 function generateNodes(graph, properties) {
   for (let x = 0; x < properties.sizeX; x++) {
     for (let y = 0; y < properties.sizeY; y++) {
-      graph.addNode(x * 100, y * 100, defaultColor);
+      graph.addNode(x * 100, y * 100, nodeColors.default);
     }
   }
   return graph;
@@ -43,10 +39,10 @@ function generateEdges(graph, properties) {
   return graph;
 }
 
-function generateWalls(graph) {
+function generateWalls(graph, properties) {
   let current = graph.nodes[0];
   let maze = new Graph();
-  maze.addNode(current.x, current.y, defaultColor, current.id);
+  maze.addNode(current.x, current.y, nodeColors.start, current.id);
   let stack = [];
   stack.push(current);
 
@@ -63,7 +59,24 @@ function generateWalls(graph) {
       let rndNeighborID = getRandomNeighborID(unvisitedEdges, current);
       let rndNeighbor = graph.getNode(rndNeighborID);
       visited[rndNeighbor.id] = true;
-      maze.addNode(rndNeighbor.x, rndNeighbor.y, defaultColor, rndNeighbor.id);
+      if (
+        rndNeighbor.x === properties.sizeX * 100 - 100 &&
+        rndNeighbor.y === properties.sizeY * 100 - 100
+      ) {
+        maze.addNode(
+          rndNeighbor.x,
+          rndNeighbor.y,
+          nodeColors.end,
+          rndNeighbor.id
+        );
+      } else {
+        maze.addNode(
+          rndNeighbor.x,
+          rndNeighbor.y,
+          nodeColors.default,
+          rndNeighbor.id
+        );
+      }
       maze.addEdge(current.id, rndNeighbor.id);
       stack.push(rndNeighbor);
     }
