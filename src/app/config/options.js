@@ -9,17 +9,21 @@ export default {
   },
   nodes: {
     shape: "square",
-    size: 25,
+    size: 40,
   },
   interaction: {
+    dragNodes: false,
     zoomView: false,
   },
   physics: {
     enabled: false,
   },
   edges: {
-    width: 40,
-    color: "#FFF",
+    width: 81.5,
+    color: {
+      background: "#fff",
+      border: "#fff",
+    },
     arrows: {
       to: false,
     },

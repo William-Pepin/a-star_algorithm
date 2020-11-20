@@ -14,8 +14,8 @@ export default class Graph {
     this.edges = [];
   }
 
-  addNode(x, y, data) {
-    let node = new Node(uuidv4(), x, y, data);
+  addNode(x, y, data, id = uuidv4()) {
+    let node = new Node(id, x, y, data);
     this.nodes.push(node);
     return node;
   }
@@ -92,9 +92,9 @@ class Edge {
    */
   getOtherNode(id) {
     if (this.from === id) {
-      return this.from;
-    } else if (this.to === id) {
       return this.to;
+    } else if (this.to === id) {
+      return this.from;
     } else {
       return null;
     }

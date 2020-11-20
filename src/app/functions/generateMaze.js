@@ -2,6 +2,11 @@ import Graph from "../class/Graph2";
 import colors from "../config/colors";
 import { getRandomInteger } from "./functions";
 
+const defaultColor = {
+  background: colors.tile,
+  border: colors.tile,
+};
+
 export default function generateMaze(sizeX, sizeY) {
   let properties = {
     sizeX: sizeX,
@@ -10,15 +15,14 @@ export default function generateMaze(sizeX, sizeY) {
   let blankMaze = new Graph();
   blankMaze = generateNodes(blankMaze, properties);
   blankMaze = generateEdges(blankMaze, properties);
-  console.log(blankMaze);
   let maze = generateWalls(blankMaze);
-  return blankMaze;
+  return maze;
 }
 
 function generateNodes(graph, properties) {
   for (let x = 0; x < properties.sizeX; x++) {
     for (let y = 0; y < properties.sizeY; y++) {
-      graph.addNode(x * 100, y * 100, colors.primary);
+      graph.addNode(x * 100, y * 100, defaultColor);
     }
   }
   return graph;
@@ -42,7 +46,7 @@ function generateEdges(graph, properties) {
 function generateWalls(graph) {
   let current = graph.nodes[0];
   let maze = new Graph();
-  current = maze.addNode(current.x, current.y, colors.primary);
+  maze.addNode(current.x, current.y, defaultColor, current.id);
   let stack = [];
   stack.push(current);
 
@@ -52,29 +56,26 @@ function generateWalls(graph) {
   while (stack.length !== 0) {
     let current = stack.pop();
 
-    let unvisitedNeighbors = getUnvisitedNeighbors(visited, current);
-    console.log(unvisitedNeighbors);
+    let unvisitedEdges = getUnvisitedEdges(visited, current);
 
-    if (unvisitedNeighbors.length !== 0) {
+    if (unvisitedEdges.length !== 0) {
       stack.push(current);
-      let rndNeighbor = graph.getNode(
-        getRandomNeighbors(unvisitedNeighbors, current.id)
-      );
+      let rndNeighborID = getRandomNeighborID(unvisitedEdges, current);
+      let rndNeighbor = graph.getNode(rndNeighborID);
       visited[rndNeighbor.id] = true;
-      let newNode = graph.addNode(rndNeighbor.x, rndNeighbor.y, colors.primary);
-      graph.addEdge(current.id, newNode.id);
+      maze.addNode(rndNeighbor.x, rndNeighbor.y, defaultColor, rndNeighbor.id);
+      maze.addEdge(current.id, rndNeighbor.id);
       stack.push(rndNeighbor);
     }
   }
   return maze;
 }
-function getRandomNeighbors(edges, current) {
+function getRandomNeighborID(edges, current) {
   return edges[getRandomInteger(0, edges.length)].getOtherNode(current.id);
 }
 
-function getUnvisitedNeighbors(visited, node) {
-  console.log(node);
-  return node.edges.filter(
-    (edge) => visited[edge.getOtherNode(node.id)].id !== true
-  );
+function getUnvisitedEdges(visited, node) {
+  return node.edges.filter((edge) => {
+    return visited[edge.getOtherNode(node.id)] !== true;
+  });
 }
