@@ -25,5 +25,5 @@ export default {
       to: false,
     },
   },
-  height: "1200px",
+  height: "600px",
 };

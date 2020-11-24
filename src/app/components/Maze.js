@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import update from "immutability-helper";
 import { v4 as uuidv4 } from "uuid";
 
 import Graph from "react-graph-vis";
 import options from "../config/options";
+import colors from "../config/nodeColors";
 import aStar from "../functions/aStar";
 import dijkstra from "../functions/dijkstra";
 import generateMaze from "../functions/generateMaze";
-
+import _ from "lodash";
 /**
  * @Author William Pépin 1634597
  * @Desc Classe définissant la composante React du labyrinthe.
@@ -21,7 +21,7 @@ export default class Maze extends Component {
    */
   constructor(props) {
     super(props);
-    this.maze = generateMaze(props.x, props.y);
+    this.maze = _.cloneDeep(this.props.maze);
     this.state = {
       nodes: this.maze.nodes,
       edges: this.maze.edges,
@@ -38,20 +38,22 @@ export default class Maze extends Component {
    */
   componentDidMount() {
     if (this.algorithm === "aStar") {
+      [this.path, this.visited] = aStar(
+        this.maze,
+        this.maze.start,
+        this.maze.end
+      );
+    } else if (this.algorithm === "dijkstra") {
       [this.path, this.visited] = dijkstra(
         this.maze,
         this.maze.start,
         this.maze.end
       );
-      //} else if (this.algorithm === "dijkstra") {
-      //  this.path = dijkstra(this.maze, this.start, this.end);
-      //} else if (this.algorithm === "depth") {
-      //  this.path = depth(this.state.maze);
-      //} else if (this.algorithm === "breadth") {
-      //  this.path = breadth(this.state.maze);
     }
-    console.log(this.path);
+
     this.path && (this.runID = setInterval(() => this.travel(), 100));
+    this.showVisited();
+    this.setColor();
   }
 
   /**
@@ -71,15 +73,31 @@ export default class Maze extends Component {
       // sort le premier élément
       let current = this.path.pop();
 
-      current.color = "green";
+      current.color = colors.path;
       current.edges.forEach((edge) => {
-        edge.color = "green";
+        edge.color = colors.path.background;
       });
-
-      this.forceUpdate();
     } else {
       clearInterval(this.runID);
+      this.setColor();
     }
+    this.forceUpdate();
+  }
+
+  setColor() {
+    this.maze.end.color = colors.end;
+    this.maze.start.color = colors.start;
+  }
+
+  showVisited() {
+    this.state.nodes.forEach((node) => {
+      if (this.visited[node.id]) {
+        node.color = colors.visited;
+        node.edges.forEach((edge) => {
+          edge.color = colors.visited.background;
+        });
+      }
+    });
   }
 
   /**

@@ -1,5 +1,5 @@
 import PriorityQueue from "priorityqueuejs";
-import colors from "../config/colors";
+import colors from "../config/nodeColors";
 
 export default function dijkstra(graph, start, end) {
   let distances = prepareDistance(graph, start);
