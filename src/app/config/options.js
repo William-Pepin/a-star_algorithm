@@ -1,6 +1,6 @@
 /**
  * @Author William Pépin
- * @Desc Constante déterminant les options des composantes react des graphs avec une hauteur de 600px. Pour la documentation des champs, voir https://visjs.github.io/vis-network/docs/network/.
+ * @Desc Constante déterminant les options des composantes react des graphs. Pour la documentation des champs, voir https://visjs.github.io/vis-network/docs/network/.
  */
 export default {
   layout: {
@@ -12,7 +12,7 @@ export default {
     size: 40,
   },
   interaction: {
-    //dragNodes: false,
+    dragNodes: false,
     zoomView: false,
   },
   physics: {

@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+
 /**
  * @Author William Pépin 1634597
  * @Desc Classe définissant un graph, un graph est une structure de données contenant des noeuds et des arrêtes. Les arrêtes servent de connecteur entre les noeuds.
@@ -73,6 +74,7 @@ class Node {
    * @Author William Pépin
    * @Desc Constructeur du noeud, permet d'instancier un nouveau noeud avec un un identifiant, des données et une couleur.
    * @param {Object-ID} id identifiant unique du noeud
+   * @param {Int-ID} index index du noeud dans le tableau de noeuds
    * @param {Int} x position sur l'axe des x du noeud dans l'univers 2D
    * @param {Int} y position sur l'axe des y du noeud dans l'univers 2D
    * @param {Object} data Données du noeud (dans ce contexte c'est la couleur)

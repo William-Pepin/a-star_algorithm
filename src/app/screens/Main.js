@@ -5,6 +5,11 @@ import generateMaze from "../functions/generateMaze";
 
 const maze = generateMaze(20, 20);
 
+/**
+ * @Author William Pépin
+ * @Desc  Fonction permettant d'afficher les composantes React de l'application à l'écran.
+ * @returns Les éléments HTML affichés à l'écran.
+ */
 export default function main() {
   return (
     <div style={style}>

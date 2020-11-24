@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
-
 import Graph from "react-graph-vis";
-import options from "../config/options";
-import colors from "../config/nodeColors";
+import { v4 as uuidv4 } from "uuid";
+import _ from "lodash";
+
 import aStar from "../functions/aStar";
 import dijkstra from "../functions/dijkstra";
-import generateMaze from "../functions/generateMaze";
-import _ from "lodash";
+
+import options from "../config/options";
+import colors from "../config/nodeColors";
+
 /**
  * @Author William Pépin 1634597
  * @Desc Classe définissant la composante React du labyrinthe.
@@ -67,10 +68,15 @@ export default class Maze extends Component {
     clearInterval(this.runID);
   }
 
+  /**
+   * @Date 2020-10-26
+   * @Author William Pépin
+   * @Desc Fonction permettant d'afficher le chemin à l'écran
+   * @param null
+   * @returns null
+   */
   travel() {
-    // si la length du stack n'égale pas 0
     if (this.path.length !== 0) {
-      // sort le premier élément
       let current = this.path.pop();
 
       current.color = colors.path;
@@ -84,11 +90,25 @@ export default class Maze extends Component {
     this.forceUpdate();
   }
 
+  /**
+   * @Date 2020-10-26
+   * @Author William Pépin
+   * @Desc Fonction permettant de mettre les couleurs de la case de début et la case de fin
+   * @param null
+   * @returns null
+   */
   setColor() {
     this.maze.end.color = colors.end;
     this.maze.start.color = colors.start;
   }
 
+  /**
+   * @Date 2020-10-26
+   * @Author William Pépin
+   * @Desc Fonction permettant de mettre les couleurs des cases visités du labyrinthe par l'algorithme
+   * @param null
+   * @returns null
+   */
   showVisited() {
     this.state.nodes.forEach((node) => {
       if (this.visited[node.id]) {

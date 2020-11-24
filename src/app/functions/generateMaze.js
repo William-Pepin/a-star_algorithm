@@ -23,6 +23,7 @@ export default function generateMaze(sizeX, sizeY) {
   let maze = generateWalls(blankMaze, properties);
   return maze;
 }
+
 /**
  * @Author William Pépin
  * @Desc Permet de générer les noeuds de départ pour le labyrinthe vide.
@@ -38,6 +39,7 @@ function generateNodes(graph, properties) {
   }
   return graph;
 }
+
 /**
  * @Author William Pépin
  * @Desc Permet de générer les arrêtes de départ pour le labyrinthe vide
@@ -59,6 +61,7 @@ function generateEdges(graph, properties) {
   }
   return graph;
 }
+
 /**
  * @Author William Pépin
  * @Desc Permet de générer les murs du labyrinthe.
@@ -112,6 +115,7 @@ function generateWalls(graph, properties) {
   }
   return maze;
 }
+
 /**
  * @Author William Pépin
  * @Desc Fonction permettant de retrouver un voisin aléatoire du noeud
