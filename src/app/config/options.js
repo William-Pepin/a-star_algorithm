@@ -19,11 +19,8 @@ export default {
     enabled: false,
   },
   edges: {
+    color: "#fff",
     width: 81,
-    color: {
-      background: "#fff",
-      border: "#fff",
-    },
     arrows: {
       to: false,
     },

@@ -71,7 +71,7 @@ function generateEdges(graph, properties) {
 function generateWalls(graph, properties) {
   let current = graph.nodes[0];
   let maze = new Graph();
-  maze.addNode(current.x, current.y, nodeColors.start, current.id);
+  maze.start = maze.addNode(current.x, current.y, nodeColors.start, current.id);
   let stack = [];
   stack.push(current);
 
@@ -81,7 +81,7 @@ function generateWalls(graph, properties) {
   while (stack.length !== 0) {
     let current = stack.pop();
 
-    let unvisitedEdges = getUnvisitedEdges(visited, current);
+    let unvisitedEdges = current.getUnvisitedEdges(visited);
 
     if (unvisitedEdges.length !== 0) {
       stack.push(current);
@@ -92,7 +92,7 @@ function generateWalls(graph, properties) {
         rndNeighbor.x === properties.sizeX * 100 - 100 &&
         rndNeighbor.y === properties.sizeY * 100 - 100
       ) {
-        maze.addNode(
+        maze.end = maze.addNode(
           rndNeighbor.x,
           rndNeighbor.y,
           nodeColors.end,
@@ -121,16 +121,4 @@ function generateWalls(graph, properties) {
  */
 function getRandomNeighborID(edges, node) {
   return edges[getRandomInteger(0, edges.length)].getOtherNode(node.id);
-}
-/**
- * @Author William Pépin
- * @Desc Fonction permettant de retrouver toutes les arrêtes non visités.
- * @param {Object} visited objet avec les noeuds visités
- * @param {Node} node noeud à vérifier
- * @returns toutes les arrêtes non visités d'un noeud, undefined si aucun n'est retrouvé.
- */
-function getUnvisitedEdges(visited, node) {
-  return node.edges.filter((edge) => {
-    return visited[edge.getOtherNode(node.id)] !== true;
-  });
 }

@@ -23,7 +23,8 @@ export default class Graph {
    * @returns Le noeud nouvellement créés
    */
   addNode(x, y, data, id = uuidv4()) {
-    let node = new Node(id, x, y, data);
+    let index = this.nodes.length;
+    let node = new Node(id, index, x, y, data);
     this.nodes.push(node);
     return node;
   }
@@ -76,12 +77,26 @@ class Node {
    * @param {Int} y position sur l'axe des y du noeud dans l'univers 2D
    * @param {Object} data Données du noeud (dans ce contexte c'est la couleur)
    */
-  constructor(id, x, y, data) {
+  constructor(id, index, x, y, data) {
+    this.id = id;
+    this.index = index;
     this.x = x;
     this.y = y;
     this.edges = [];
     this.color = data;
-    this.id = id;
+  }
+
+  /**
+   * @Author William Pépin
+   * @Desc Fonction permettant de retrouver toutes les arrêtes non visités.
+   * @param {Object} visited objet avec les noeuds visités
+   * @param {Node} node noeud à vérifier
+   * @returns toutes les arrêtes non visités d'un noeud, undefined si aucun n'est retrouvé.
+   */
+  getUnvisitedEdges(visited) {
+    return this.edges.filter((edge) => {
+      return visited[edge.getOtherNode(this.id)] !== true;
+    });
   }
 }
 
