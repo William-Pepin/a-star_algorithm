@@ -38,7 +38,7 @@ export default class Graph {
    * @param {ObjectID} id Identifiant unique de l'arrête
    * @returns L'arrête nouvellement créés
    */
-  addEdge(from, to, weight = 100, id = uuidv4()) {
+  addEdge(from, to, weight = 25, id = uuidv4()) {
     let edge = new Edge(id, from, to, weight);
     this.getNode(from).edges.push(edge);
     this.getNode(to).edges.push(edge);
