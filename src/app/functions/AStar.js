@@ -46,7 +46,6 @@ export default function aStar(graph, start, end) {
  * @returns Un array contenant une stack avec le chemin de noeud.
  */
 function buildPath(previousNodes, end) {
-  console.log(end);
   let stack = [];
 
   stack.push(end);

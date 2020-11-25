@@ -3,7 +3,7 @@ import Maze from "../components/Maze";
 import colors from "../config/colors";
 import generateMaze from "../functions/generateMaze";
 
-const maze = generateMaze(20, 20);
+const maze = generateMaze(50, 50);
 
 /**
  * @Author William Pépin
